@@ -25,7 +25,7 @@ public class CreateUserUseCase implements CreateUserPortIn {
         logger.info("Creating user: {}", user.getEmail());
         var optUser = userRepositoryPortOut.findByEmail(user.getEmail());
         if (optUser.isPresent()) {
-            throw new UserAlreadyExistException("User already exists: " + user.getEmail());
+            throw new UserAlreadyExistException();
         }
         user.encodePassword(bCryptPasswordEncoder);
         var userCreated = userRepositoryPortOut.save(user);

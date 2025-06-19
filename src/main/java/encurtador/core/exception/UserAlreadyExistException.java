@@ -7,7 +7,10 @@ public class UserAlreadyExistException extends DomainException {
 
     @Override
     public ProblemDetail toProblemDetail() {
-        var pb = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
+        var pb = ProblemDetail.forStatus(HttpStatus.UNPROCESSABLE_ENTITY);
+
+        pb.setTitle("User Already Exists Exception");
+        pb.setDetail("There is an user with this email");
         return pb;
     }
 }
