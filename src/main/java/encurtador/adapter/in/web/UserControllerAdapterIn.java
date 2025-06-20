@@ -3,6 +3,7 @@ package encurtador.adapter.in.web;
 import encurtador.adapter.in.web.dto.CreateUserRequest;
 import encurtador.adapter.in.web.dto.CreateUserResponse;
 import encurtador.core.port.in.CreateUserPortIn;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,7 +23,7 @@ public class UserControllerAdapterIn {
     }
 
     @PostMapping
-    public ResponseEntity<CreateUserResponse> createUser(@RequestBody CreateUserRequest req) {
+    public ResponseEntity<CreateUserResponse> createUser(@RequestBody @Valid CreateUserRequest req) {
 
         var userCreated = createUserPortIn.execute(req.toDomain());
 
