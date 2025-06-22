@@ -11,4 +11,6 @@ public interface UserRepositoryPortOut {
     Optional<User> findByEmail(String email);
 
     void deleteById(UUID userId);
+
+    Optional<User> findbyId(UUID userId);
 }

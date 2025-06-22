@@ -1,5 +1,6 @@
 package encurtador.core.usecases;
 
+import encurtador.core.exception.UserNotFoundException;
 import encurtador.core.port.in.DeleteUserPortIn;
 import encurtador.core.port.out.UserRepositoryPortOut;
 import org.springframework.stereotype.Component;
@@ -17,6 +18,8 @@ public class DeleteUserUseCase implements DeleteUserPortIn {
 
     @Override
     public void execute(UUID userId) {
+        userRepositoryPortOut.findbyId(userId)
+                .orElseThrow(UserNotFoundException::new);
         userRepositoryPortOut.deleteById(userId);
     }
 }

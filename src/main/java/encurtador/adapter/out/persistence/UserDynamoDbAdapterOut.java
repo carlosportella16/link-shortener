@@ -54,4 +54,14 @@ public class UserDynamoDbAdapterOut implements UserRepositoryPortOut {
 
         dynamoDbTemplate.delete(key, UserEntity.class);
     }
+
+    @Override
+    public Optional<User> findbyId(UUID userId) {
+        var key = Key.builder()
+                .partitionValue(userId.toString())
+                .build();
+
+        var entity = dynamoDbTemplate.load(key, UserEntity.class);
+        return entity == null ? Optional.empty() : Optional.of(entity.toDomain());
+    }
 }
