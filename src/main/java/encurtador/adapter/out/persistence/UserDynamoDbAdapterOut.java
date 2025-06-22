@@ -4,11 +4,13 @@ import encurtador.core.domain.User;
 import encurtador.core.port.out.UserRepositoryPortOut;
 import io.awspring.cloud.dynamodb.DynamoDbTemplate;
 import org.springframework.stereotype.Component;
+import software.amazon.awssdk.enhanced.dynamodb.Key;
 import software.amazon.awssdk.enhanced.dynamodb.model.QueryConditional;
 import software.amazon.awssdk.enhanced.dynamodb.model.QueryEnhancedRequest;
 import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
 
 import java.util.Optional;
+import java.util.UUID;
 
 import static encurtador.config.Constants.EMAIL_INDEX;
 
@@ -42,5 +44,14 @@ public class UserDynamoDbAdapterOut implements UserRepositoryPortOut {
                 .flatMap(userEntityPage -> userEntityPage.items().stream())
                 .map(UserEntity::toDomain)
                 .findFirst();
+    }
+
+    @Override
+    public void deleteById(UUID userId) {
+        var key = Key.builder()
+                .partitionValue(userId.toString())
+                .build();
+
+        dynamoDbTemplate.delete(key, UserEntity.class);
     }
 }
