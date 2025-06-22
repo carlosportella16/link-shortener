@@ -6,7 +6,8 @@ import org.springframework.http.ProblemDetail;
 public class DomainException extends RuntimeException {
 
     public ProblemDetail toProblemDetail() {
-        var pb = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
+        var pb = ProblemDetail.forStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+        pb.setTitle("Link Shortener internal server error");
         return pb;
     }
 }
